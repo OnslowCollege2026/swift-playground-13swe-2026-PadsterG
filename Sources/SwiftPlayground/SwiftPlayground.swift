@@ -23,6 +23,11 @@ struct Borrow {
 @main
 struct SwiftPlayground {
     static func main() {
-        print("Hello, world!")
+        let books: [Book] = [
+            Book(id: 1, title: "Fish School", author: "Tom Rose", pages: 32, available: true)
+            Book(id: 2, title: "Undercover Steve", author: "Lily Waterton", pages: 145, available: true)
+            Book(id: 3, title: "The Living Computer", author: "Tom Rose", pages: 87, available: true)
+            Book(id: 4, title: "Fifty Questions", author: "Tracy Parker", pages: 32, available: true)
+        ]
     }
 }
