@@ -14,6 +14,12 @@ struct Borrower {
     let firstName: String
     let lastName: String
 }
+
+struct Borrow {
+    let bookId: Int
+    let borrowerId: Int
+    let borrowLength: Int
+}
 @main
 struct SwiftPlayground {
     static func main() {
