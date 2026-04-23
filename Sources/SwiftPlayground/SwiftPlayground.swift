@@ -1,16 +1,18 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
-struct Book identifiable {
-    let id: Int
+import Foundation
+
+struct Book: Identifiable {
+    let id = UUID()
     let title: String
     let author: String
     let pages: Int
-    let available: Bool
+    var available: Bool
 }
 
-struct Borrower {
-    let id: Int
+struct User: Identifiable {
+    let id = UUID()
     let firstName: String
     let lastName: String
 }
@@ -30,15 +32,32 @@ func showAvailableBooks(list: [Book]) {
         print()
     }
 }
+
 @main
 struct SwiftPlayground {
     static func main() {
         let books: [Book] = [
-            Book(id: 1, title: "Fish School", author: "Tom Rose", pages: 32, available: true),
-            Book(id: 2, title: "Undercover Steve", author: "Lily Waterton", pages: 145, available: false),
-            Book(id: 3, title: "The Living Computer", author: "Tom Rose", pages: 87, available: true),
-            Book(id: 4, title: "Fifty Questions", author: "Tracy Parker", pages: 32, available: false)
+            Book(title: "Fish School", author: "Tom Rose", pages: 32, available: true),
+            Book(title: "Undercover Steve", author: "Lily Waterton", pages: 145, available: false),
+            Book(title: "The Living Computer", author: "Tom Rose", pages: 87, available: true),
+            Book(title: "Fifty Questions", author: "Tracy Parker", pages: 32, available: false)
         ]
         showAvailableBooks(list: books)
+        print("""
+        Welcome to the library
+
+        What would you like to do?
+        A) Add a new book
+        B) Delete a loan
+        C) Register a new user
+        D) Issue a book
+        E) Return a book
+        F) View available/unavailable books
+        G) Search for a book
+        H) Search for a user
+        I) Edit a book's details
+        J) Edit a user's details
+        """)
+        
     }
 }
