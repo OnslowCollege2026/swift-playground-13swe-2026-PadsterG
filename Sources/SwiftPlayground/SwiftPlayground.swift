@@ -42,7 +42,8 @@ struct SwiftPlayground {
             Book(title: "The Living Computer", author: "Tom Rose", pages: 87, available: true),
             Book(title: "Fifty Questions", author: "Tracy Parker", pages: 32, available: false)
         ]
-        showAvailableBooks(list: books)
+        // showAvailableBooks(list: books)
+
         print("""
         Welcome to the library
 
@@ -58,6 +59,17 @@ struct SwiftPlayground {
         I) Edit a book's details
         J) Edit a user's details
         """)
-        
+
+        var askingForUserChoice: Bool = true
+        while askingForUserChoice {
+            print(terminator: "")
+            let userOption = readLine()!
+            print()
+            if userOption.count > 0 {
+                
+            } else {
+                print("No input given, please try again.")
+            }
+        }
     }
 }
