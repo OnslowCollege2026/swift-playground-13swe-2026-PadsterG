@@ -58,17 +58,31 @@ struct SwiftPlayground {
         H) Search for a user
         I) Edit a book's details
         J) Edit a user's details
+
         """)
 
         var askingForUserChoice: Bool = true
         while askingForUserChoice {
-            print(terminator: "")
+            print("Enter the letter linked with the option: ", terminator: "")
             let userOption = readLine()!
-            print()
             if userOption.count > 0 {
-                
+                switch userOption.uppercased() {
+                    case "A": print("Add a new book"); askingForUserChoice = false; break
+                    case "B": print("Register a new user"); askingForUserChoice = false; break
+                    case "C": print("Issue a book"); askingForUserChoice = false; break
+                    case "D": print("Return a book"); askingForUserChoice = false; break
+                    case "E": print("View available/unavailable books"); askingForUserChoice = false; break
+                    case "F": print("Search for a book"); askingForUserChoice = false; break
+                    case "G": print("Search for a user"); askingForUserChoice = false; break
+                    case "H": print("Edit a book's details"); askingForUserChoice = false; break
+                    case "I": print("Edit a user's details"); askingForUserChoice = false; break
+                    case "J": print("Delete a book"); askingForUserChoice = false; break
+                    case "K": print("Delete a user"); askingForUserChoice = false; break
+                    default: print("Invalid answer, please try again."); print()
+                }
             } else {
                 print("No input given, please try again.")
+                print()
             }
         }
     }
