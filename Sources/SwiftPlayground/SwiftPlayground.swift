@@ -27,7 +27,18 @@ func showAvailableBooks(list: [Book]) {
     let availableBooks = list.filter { book in
         book.available == true
     }
+    let unavailableBooks = list.filter { book in
+        book.available == false
+    }
+
+    print("< Available books >")
     for book in availableBooks {
+        print(book)
+        print()
+    }
+
+    print("< Unavailable books >")
+    for book in unavailableBooks {
         print(book)
         print()
     }
@@ -36,7 +47,7 @@ func showAvailableBooks(list: [Book]) {
 @main
 struct SwiftPlayground {
     static func main() {
-        let books: [Book] = [
+        var books: [Book] = [
             Book(title: "Fish School", author: "Tom Rose", pages: 32, available: true),
             Book(title: "Undercover Steve", author: "Lily Waterton", pages: 145, available: false),
             Book(title: "The Living Computer", author: "Tom Rose", pages: 87, available: true),
@@ -49,15 +60,16 @@ struct SwiftPlayground {
 
         What would you like to do?
         A) Add a new book
-        B) Delete a loan
-        C) Register a new user
-        D) Issue a book
-        E) Return a book
-        F) View available/unavailable books
-        G) Search for a book
-        H) Search for a user
-        I) Edit a book's details
-        J) Edit a user's details
+        B) Register a new user
+        C) Issue a book
+        D) Return a book
+        E) View available/unavailable books
+        F) Search for a book
+        G) Search for a user
+        H) Edit a book's details
+        I) Edit a user's details
+        J) Delete a book
+        K) Delete a user
 
         """)
 
