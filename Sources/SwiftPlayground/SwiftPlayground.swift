@@ -3,29 +3,49 @@
 
 import Foundation
 
+/// A book at the library.
+///
+/// Properties:
+/// - id: the book's unique identifier.
+/// - title: the full title of the book.
+/// - author: person who wrote the book.
+/// - pages: the number of pages in the book.
+/// - available: whether the book is currently on loan or not.
 struct Book: Identifiable {
     let id = UUID()
     let title: String
     let author: String
     let pages: Int
     var available: Bool
-    func summary() -> String {
-        return("""
+    var summary: String {
+        """
         \"\(title)\": author: \(author), pages: \(pages), available: \(available).
-        """)
+        """
     }
 }
 
+/// A person who can borrow books
+///
+/// Properties:
+/// - id: the user's unique identifier.
+/// - firstName: the user's first name
+/// - lastName: the user's last name
 struct User: Identifiable {
     let id = UUID()
     let firstName: String
     let lastName: String
 }
 
-struct Borrow {
+/// A loan between a user and a book.
+///
+/// Properties:
+/// - bookId: what book is being borrowed. 
+/// - userId: what user is borrowing the book.
+/// - loanLength: how many days until the book should be returned.
+struct Loan {
     let bookId: Int
-    let borrowerId: Int
-    let borrowLength: Int
+    let userId: Int
+    let loanLength: Int
 }
 
 func showAvailableBooks(list: [Book]) {
@@ -39,16 +59,26 @@ func showAvailableBooks(list: [Book]) {
     print("< Available books >")
     print()
     for book in availableBooks {
-        print(book.summary())
+        print(book.summary)
         print()
     }
 
     print("< Unavailable books >")
     print()
     for book in unavailableBooks {
-        print(book.summary())
+        print(book.summary)
         print()
     }
+}
+
+func addNewBook() -> Book {
+    print("Enter the title of the book:", terminator: "")
+    let bookTitle = readLine()!
+    print("Enter the author of the book:", terminator: "")
+    let bookAuthor = readLine()!
+    print("Enter the number of pages in the book:", terminator: "")
+    let bookPages = Int(readLine()!)!
+    return Book(title: bookTitle, author: bookAuthor, pages: bookPages, available: true)
 }
 
 @main
@@ -86,7 +116,7 @@ struct SwiftPlayground {
             print()
             if userOption.count > 0 {
                 switch userOption.uppercased() {
-                    case "A": print("Add a new book"); askingForUserChoice = false; break
+                    case "A": print("Add a new book"); books.append(addNewBook()); showAvailableBooks(list: books); askingForUserChoice = false; break
                     case "B": print("Register a new user"); askingForUserChoice = false; break
                     case "C": print("Issue a book"); askingForUserChoice = false; break
                     case "D": print("Return a book"); askingForUserChoice = false; break
