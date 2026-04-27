@@ -8,7 +8,7 @@ import Foundation
 /// Properties:
 /// - id: the book's unique identifier.
 /// - title: the full title of the book.
-/// - author: person who wrote the book.
+/// - author: who wrote the book.
 /// - pages: the number of pages in the book.
 /// - available: whether the book is currently on loan or not.
 struct Book: Identifiable {
