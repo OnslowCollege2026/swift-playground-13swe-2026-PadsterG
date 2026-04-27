@@ -3,12 +3,18 @@
 
 import Foundation
 
+
 struct Book: Identifiable {
     let id = UUID()
     let title: String
     let author: String
     let pages: Int
     var available: Bool
+    func summary() -> String {
+        return("""
+        \"\(title)\": author: \(author), pages: \(pages), available: \(available).
+        """)
+    }
 }
 
 struct User: Identifiable {
@@ -32,14 +38,16 @@ func showAvailableBooks(list: [Book]) {
     }
 
     print("< Available books >")
+    print()
     for book in availableBooks {
-        print(book)
+        print(book.summary())
         print()
     }
 
     print("< Unavailable books >")
+    print()
     for book in unavailableBooks {
-        print(book)
+        print(book.summary())
         print()
     }
 }
@@ -53,7 +61,6 @@ struct SwiftPlayground {
             Book(title: "The Living Computer", author: "Tom Rose", pages: 87, available: true),
             Book(title: "Fifty Questions", author: "Tracy Parker", pages: 32, available: false)
         ]
-        // showAvailableBooks(list: books)
 
         print("""
         Welcome to the library
@@ -77,13 +84,14 @@ struct SwiftPlayground {
         while askingForUserChoice {
             print("Enter the letter linked with the option: ", terminator: "")
             let userOption = readLine()!
+            print()
             if userOption.count > 0 {
                 switch userOption.uppercased() {
                     case "A": print("Add a new book"); askingForUserChoice = false; break
                     case "B": print("Register a new user"); askingForUserChoice = false; break
                     case "C": print("Issue a book"); askingForUserChoice = false; break
                     case "D": print("Return a book"); askingForUserChoice = false; break
-                    case "E": print("View available/unavailable books"); askingForUserChoice = false; break
+                    case "E": showAvailableBooks(list: books); askingForUserChoice = false; break;
                     case "F": print("Search for a book"); askingForUserChoice = false; break
                     case "G": print("Search for a user"); askingForUserChoice = false; break
                     case "H": print("Edit a book's details"); askingForUserChoice = false; break
