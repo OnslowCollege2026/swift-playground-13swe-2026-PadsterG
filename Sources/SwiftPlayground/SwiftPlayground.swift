@@ -72,13 +72,49 @@ func showAvailableBooks(list: [Book]) {
 }
 
 func addNewBook() -> Book {
-    print("Enter the title of the book:", terminator: "")
-    let bookTitle = readLine()!
-    print("Enter the author of the book:", terminator: "")
-    let bookAuthor = readLine()!
-    print("Enter the number of pages in the book:", terminator: "")
-    let bookPages = Int(readLine()!)!
-    return Book(title: bookTitle, author: bookAuthor, pages: bookPages, available: true)
+    var bookTitle = ""
+    var bookAuthor = ""
+    var bookPages = 0
+    var askingForBookTitle: Bool = true
+    while askingForBookTitle {
+        print("Enter the title of the book:", terminator: "")
+        bookTitle = readLine()!
+        if bookTitle.count < 1 {
+            print("No title entered, please try again.")
+        } else if bookTitle.count > 50 {
+            print("Book title is too long, please enter a different one.")
+        } else {
+            askingForBookTitle = false
+            break
+        }
+    }
+    var askingForBookAuthor: Bool = true
+    while askingForBookAuthor {
+        print("Enter the author of the book:", terminator: "")
+        bookAuthor = readLine()!
+        if bookAuthor.count < 1 {
+            print("No name entered, please try again.")
+        } else if bookAuthor.count > 50 {
+            print("Book author is too long, please enter a different one.")
+        } else {
+            askingForBookAuthor = false
+            break
+        }
+    }
+
+    var askingForBookPages: Bool = true
+    while askingForBookPages {
+        print("Enter the number of pages in the book:", terminator: "")
+        let bookPages = Int(readLine()!)!
+        if bookPages < 1 {
+            print("No , please try again.")
+        } else {
+            askingForBookPages = false
+            break
+        }
+    }
+
+    return Book(title: bookTitle, author: bookTitle, pages: 42, available: true)
 }
 
 @main
