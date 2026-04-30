@@ -71,50 +71,52 @@ func showAvailableBooks(list: [Book]) {
     }
 }
 
+func checkString(string: String) -> Bool {
+    if string.count <= 0 {
+        print("No input entered, please try again.")
+        return true
+    } else if string.count > 50 {
+        print("Input is too long, please enter a different one.")
+        return true
+    } else {
+        return false
+    }
+}
+
 func addNewBook() -> Book {
+
     var bookTitle = ""
     var bookAuthor = ""
     var bookPages = 0
     var askingForBookTitle: Bool = true
     while askingForBookTitle {
-        print("Enter the title of the book:", terminator: "")
+        print("Enter the title of the book: ", terminator: "")
         bookTitle = readLine()!
-        if bookTitle.count < 1 {
-            print("No title entered, please try again.")
-        } else if bookTitle.count > 50 {
-            print("Book title is too long, please enter a different one.")
-        } else {
-            askingForBookTitle = false
-            break
-        }
+        askingForBookTitle = checkString(string: bookTitle)
     }
+
     var askingForBookAuthor: Bool = true
     while askingForBookAuthor {
-        print("Enter the author of the book:", terminator: "")
+        print("Enter the author of the book: ", terminator: "")
         bookAuthor = readLine()!
-        if bookAuthor.count < 1 {
-            print("No name entered, please try again.")
-        } else if bookAuthor.count > 50 {
-            print("Book author is too long, please enter a different one.")
-        } else {
-            askingForBookAuthor = false
-            break
-        }
+        askingForBookAuthor = checkString(string: bookAuthor)
     }
 
     var askingForBookPages: Bool = true
     while askingForBookPages {
-        print("Enter the number of pages in the book:", terminator: "")
-        let bookPages = Int(readLine()!)!
-        if bookPages < 1 {
-            print("No , please try again.")
+        print("How many pages does the book have? ", terminator: "")
+        if let bookPages = readLine(), let bookPages = Int(bookPages) {
+            if bookPages <= 0 {
+                print("There must be atleast 1 page in the book, please try again.")
+            } else {
+                askingForBookPages = false
+            }
         } else {
-            askingForBookPages = false
-            break
+            print("Please enter a whole positive number.")
         }
     }
 
-    return Book(title: bookTitle, author: bookTitle, pages: 42, available: true)
+    return Book(title: bookTitle, author: bookAuthor, pages: bookPages, available: true)
 }
 
 @main
@@ -152,7 +154,7 @@ struct SwiftPlayground {
             print()
             if userOption.count > 0 {
                 switch userOption.uppercased() {
-                    case "A": print("Add a new book"); books.append(addNewBook()); showAvailableBooks(list: books); askingForUserChoice = false; break
+                    case "A": print("Add a new book"); books.append(addNewBook()); askingForUserChoice = false; break
                     case "B": print("Register a new user"); askingForUserChoice = false; break
                     case "C": print("Issue a book"); askingForUserChoice = false; break
                     case "D": print("Return a book"); askingForUserChoice = false; break
