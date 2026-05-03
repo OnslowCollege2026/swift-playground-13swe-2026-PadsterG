@@ -48,14 +48,23 @@ struct Loan {
     let loanLength: Int
 }
 
+/// Filters through the list of books to seperate available and unavailable books.
+/// 
+/// Parameters:
+/// - list: The list of books to filter through.
 func showAvailableBooks(list: [Book]) {
+
+    // Adds only available books to a new list.
     let availableBooks = list.filter { book in
         book.available == true
     }
+    
+    // Adds only unavailable books to a new list.
     let unavailableBooks = list.filter { book in
         book.available == false
     }
 
+    // Prints a condensed format of all available books.
     print("< Available books >")
     print()
     for book in availableBooks {
@@ -63,6 +72,7 @@ func showAvailableBooks(list: [Book]) {
         print()
     }
 
+    // Prints a condensed format of all unavailable books.
     print("< Unavailable books >")
     print()
     for book in unavailableBooks {
@@ -71,51 +81,81 @@ func showAvailableBooks(list: [Book]) {
     }
 }
 
+/// Takes a string value entered and tests if it meets valid conditions.
+/// 
+/// Parameters:
+/// - string: The user's input.
+/// Returns: If the while loop condition should remain true or not.
 func checkString(string: String) -> Bool {
+
+    // Tells user to enter again if nothing is entered.
     if string.count <= 0 {
         print("No input entered, please try again.")
         return true
+        
+    // Tells user to enter again if the string is more than 50 letters.
     } else if string.count > 50 {
         print("Input is too long, please enter a different one.")
         return true
+    
+    // Otherwise, the string is deemed valid and user will escape the while loop.
     } else {
         return false
     }
 }
 
+/// Adds a new book
 func addNewBook() -> Book {
 
+    // Variables for the properties start at default values.
     var bookTitle = ""
     var bookAuthor = ""
     var bookPages = 0
+
+    // While loop will keep cycling until this variable is equal to false.
     var askingForBookTitle: Bool = true
     while askingForBookTitle {
+
+        // Asks for book title and puts it through a function to check it's valid.
         print("Enter the title of the book: ", terminator: "")
         bookTitle = readLine()!
         askingForBookTitle = checkString(string: bookTitle)
     }
 
+    // While loop will keep cycling until this variable is equal to false.
     var askingForBookAuthor: Bool = true
     while askingForBookAuthor {
+        
+        // Asks for book author and puts it through a function to check it's valid.
         print("Enter the author of the book: ", terminator: "")
         bookAuthor = readLine()!
         askingForBookAuthor = checkString(string: bookAuthor)
     }
 
+    // While loop will keep cycling until this variable is equal to false.
     var askingForBookPages: Bool = true
     while askingForBookPages {
+
+        // Asks for the number of pages in the book.
         print("How many pages does the book have? ", terminator: "")
+
+        // Checks the answer is an integer.
         if let bookPages = readLine(), let bookPages = Int(bookPages) {
+            
+            // Ensures there is atleast one page, if there is, the while loop ends.
             if bookPages <= 0 {
                 print("There must be atleast 1 page in the book, please try again.")
             } else {
                 askingForBookPages = false
             }
+        
+        // Otherwise, an error message is given and user is asked again.
         } else {
             print("Please enter a whole positive number.")
         }
     }
 
+    // Returns a new book 
     return Book(title: bookTitle, author: bookAuthor, pages: bookPages, available: true)
 }
 
