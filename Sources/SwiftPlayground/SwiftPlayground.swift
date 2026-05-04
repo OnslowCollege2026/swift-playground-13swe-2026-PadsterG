@@ -179,6 +179,39 @@ func addNewBook() -> Book {
     return Book(title: bookTitle, author: bookAuthor, pages: bookPages, available: true)
 }
 
+/// Steps of asking the user for properties to register a new user instance.
+/// 
+/// Returns: A new user instance.
+func addNewUser() -> User {
+
+    // Variables for the properties start at default values.
+    var firstName = ""
+    var lastName = ""
+
+    // While loop will keep cycling until this variable is equal to false.
+    var askingForFirstName: Bool = true
+    while askingForFirstName {
+
+        // Asks for user's first name and puts it through a function to check it's valid.
+        print("Enter the user's first name: ", terminator: "")
+        firstName = readLine()!
+        askingForFirstName = checkString(string: firstName)
+    }
+
+    // While loop will keep cycling until this variable is equal to false.
+    var askingForLastName: Bool = true
+    while askingForLastName {
+
+        // Asks for user's last name and puts it through a function to check it's valid.
+        print("Enter the user's last name: ", terminator: "")
+        lastName = readLine()!
+        askingForLastName = checkString(string: lastName)
+    }
+
+    // Returns a new user instance with properties the user entered.
+    return User(firstName: firstName, lastName: lastName)
+}
+
 @main
 struct SwiftPlayground {
     static func main() {
@@ -199,12 +232,19 @@ struct SwiftPlayground {
         while programRunning {
             printMenu()
 
+            // While loop to ask for the user's choice.
             var askingForUserChoice: Bool = true
             while askingForUserChoice {
+
+                // Space for the user to enter their choice.
                 print("Enter the letter linked with the option: ", terminator: "")
                 let userOption = readLine()!
                 print()
+
+                // Only consider input if it's not null.
                 if userOption.count > 0 {
+
+                    // Different responses for different letters entered.
                     switch userOption.uppercased() {
                         case "A": print("Add a new book"); books.append(addNewBook()); askingForUserChoice = false; break
                         case "B": print("Register a new user"); askingForUserChoice = false; break
@@ -219,26 +259,33 @@ struct SwiftPlayground {
                         case "K": print("Delete a user"); askingForUserChoice = false; break
                         default: print("Invalid answer, please try again."); print()
                     }
+                
+                // If input is null, error messasge is given.
                 } else {
                     print("No input given, please try again.")
                     print()
                 }
             }
 
+            // While loop to check if the user would like to quit the program.
             var askingForKeepGoing: Bool = true
             while askingForKeepGoing {
-
+                
+                // Gives input space
                 print("Would you like to do another thing? (Y/N) ", terminator: "")
                 let keepGoing = readLine()!
                 print()
 
+                // If user enters yes, this loop ends and user cycles to start of main loop.
                 if keepGoing.uppercased() == "Y" {
                     askingForKeepGoing = false
 
+                // If user enters no, this loop ends and so does the main loop.
                 } else if keepGoing.uppercased() == "N" {
                     askingForKeepGoing = false
                     programRunning = false
 
+                // Otherwise, the input must be invalid.
                 } else {
                     print("Invalid input, please try again.")
                     print()
