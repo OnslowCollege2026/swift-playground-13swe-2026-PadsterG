@@ -130,7 +130,7 @@ func addNewBook() -> Book {
     // Variables for the properties start at default values.
     var bookTitle = ""
     var bookAuthor = ""
-    let bookPages = 0
+    var bookPages = 0
 
     // While loop will keep cycling until this variable is equal to false.
     var askingForBookTitle: Bool = true
@@ -158,9 +158,10 @@ func addNewBook() -> Book {
 
         // Asks for the number of pages in the book.
         print("How many pages does the book have? ", terminator: "")
+        let bookPages = readLine()
 
         // Checks the answer is an integer.
-        if let bookPages = readLine(), let bookPages = Int(bookPages) {
+        if bookPages is Int {
             
             // Ensures there is atleast one page, if there is, the while loop ends.
             if bookPages <= 0 {
