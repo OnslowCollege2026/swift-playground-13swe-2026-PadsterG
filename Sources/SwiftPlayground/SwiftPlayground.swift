@@ -48,6 +48,24 @@ struct Loan {
     let loanLength: Int
 }
 
+func printMenu() {
+    print("""
+    What would you like to do?
+    A) Add a new book
+    B) Register a new user
+    C) Issue a book
+    D) Return a book
+    E) View available/unavailable books
+    F) Search for a book
+    G) Search for a user
+    H) Edit a book's details
+    I) Edit a user's details
+    J) Delete a book
+    K) Delete a user
+
+    """)
+}
+
 /// Filters through the list of books to seperate available and unavailable books.
 /// 
 /// Parameters:
@@ -104,13 +122,15 @@ func checkString(string: String) -> Bool {
     }
 }
 
-/// Adds a new book
+/// Steps of asking the user for properties to build a new book instance.
+/// 
+/// Returns: A new book instance.
 func addNewBook() -> Book {
 
     // Variables for the properties start at default values.
     var bookTitle = ""
     var bookAuthor = ""
-    var bookPages = 0
+    let bookPages = 0
 
     // While loop will keep cycling until this variable is equal to false.
     var askingForBookTitle: Bool = true
@@ -155,13 +175,15 @@ func addNewBook() -> Book {
         }
     }
 
-    // Returns a new book 
+    // Returns a new book instance with properties the user entered.
     return Book(title: bookTitle, author: bookAuthor, pages: bookPages, available: true)
 }
 
 @main
 struct SwiftPlayground {
     static func main() {
+
+        // Initial list of books.
         var books: [Book] = [
             Book(title: "Fish School", author: "Tom Rose", pages: 32, available: true),
             Book(title: "Undercover Steve", author: "Lily Waterton", pages: 145, available: false),
@@ -169,47 +191,58 @@ struct SwiftPlayground {
             Book(title: "Fifty Questions", author: "Tracy Parker", pages: 32, available: false)
         ]
 
-        print("""
-        Welcome to the library
+        print("Welcome to the library!")
+        print()
+        
+        // While loop for whole program.
+        var programRunning = true
+        while programRunning {
+            printMenu()
 
-        What would you like to do?
-        A) Add a new book
-        B) Register a new user
-        C) Issue a book
-        D) Return a book
-        E) View available/unavailable books
-        F) Search for a book
-        G) Search for a user
-        H) Edit a book's details
-        I) Edit a user's details
-        J) Delete a book
-        K) Delete a user
-
-        """)
-
-        var askingForUserChoice: Bool = true
-        while askingForUserChoice {
-            print("Enter the letter linked with the option: ", terminator: "")
-            let userOption = readLine()!
-            print()
-            if userOption.count > 0 {
-                switch userOption.uppercased() {
-                    case "A": print("Add a new book"); books.append(addNewBook()); askingForUserChoice = false; break
-                    case "B": print("Register a new user"); askingForUserChoice = false; break
-                    case "C": print("Issue a book"); askingForUserChoice = false; break
-                    case "D": print("Return a book"); askingForUserChoice = false; break
-                    case "E": showAvailableBooks(list: books); askingForUserChoice = false; break;
-                    case "F": print("Search for a book"); askingForUserChoice = false; break
-                    case "G": print("Search for a user"); askingForUserChoice = false; break
-                    case "H": print("Edit a book's details"); askingForUserChoice = false; break
-                    case "I": print("Edit a user's details"); askingForUserChoice = false; break
-                    case "J": print("Delete a book"); askingForUserChoice = false; break
-                    case "K": print("Delete a user"); askingForUserChoice = false; break
-                    default: print("Invalid answer, please try again."); print()
-                }
-            } else {
-                print("No input given, please try again.")
+            var askingForUserChoice: Bool = true
+            while askingForUserChoice {
+                print("Enter the letter linked with the option: ", terminator: "")
+                let userOption = readLine()!
                 print()
+                if userOption.count > 0 {
+                    switch userOption.uppercased() {
+                        case "A": print("Add a new book"); books.append(addNewBook()); askingForUserChoice = false; break
+                        case "B": print("Register a new user"); askingForUserChoice = false; break
+                        case "C": print("Issue a book"); askingForUserChoice = false; break
+                        case "D": print("Return a book"); askingForUserChoice = false; break
+                        case "E": showAvailableBooks(list: books); askingForUserChoice = false; break;
+                        case "F": print("Search for a book"); askingForUserChoice = false; break
+                        case "G": print("Search for a user"); askingForUserChoice = false; break
+                        case "H": print("Edit a book's details"); askingForUserChoice = false; break
+                        case "I": print("Edit a user's details"); askingForUserChoice = false; break
+                        case "J": print("Delete a book"); askingForUserChoice = false; break
+                        case "K": print("Delete a user"); askingForUserChoice = false; break
+                        default: print("Invalid answer, please try again."); print()
+                    }
+                } else {
+                    print("No input given, please try again.")
+                    print()
+                }
+            }
+
+            var askingForKeepGoing: Bool = true
+            while askingForKeepGoing {
+
+                print("Would you like to do another thing? (Y/N) ", terminator: "")
+                let keepGoing = readLine()!
+                print()
+
+                if keepGoing.uppercased() == "Y" {
+                    askingForKeepGoing = false
+
+                } else if keepGoing.uppercased() == "N" {
+                    askingForKeepGoing = false
+                    programRunning = false
+
+                } else {
+                    print("Invalid input, please try again.")
+                    print()
+                }
             }
         }
     }
