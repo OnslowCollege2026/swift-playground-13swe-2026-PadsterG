@@ -19,7 +19,7 @@ struct Book: Identifiable {
     var available: Bool
     var summary: String {
         """
-        \"\(title)\": author: \(author), pages: \(pages), available: \(available).
+        \"\(title)\": author: \(author), pages: \(pages).
         """
     }
 }
