@@ -152,25 +152,20 @@ func addNewBook() -> Book {
         askingForBookAuthor = checkString(string: bookAuthor)
     }
 
-    // While loop will keep cycling until this variable is equal to false.
     var askingForBookPages: Bool = true
     while askingForBookPages {
 
-        // Asks for the number of pages in the book.
         print("How many pages does the book have? ", terminator: "")
         let bookPages: String! = readLine()
 
-        // Checks the answer is an integer.
-        if Int(bookPages) is Int {
+        if bookPages is Int {
             
-            // Ensures there is atleast one page, if there is, the while loop ends.
             if bookPagesNumber <= 0 {
                 print("There must be atleast 1 page in the book, please try again.")
             } else {
                 askingForBookPages = false
             }
         
-        // Otherwise, an error message is given and user is asked again.
         } else {
             print("Please enter a whole positive number.")
         }
