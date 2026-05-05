@@ -128,9 +128,9 @@ func checkString(string: String) -> Bool {
 /// Returns: A new book instance.
 func addNewBook() -> Book {
 
-    // Variables for the properties start at default values.
-    var bookTitle = ""
-    var bookAuthor = ""
+    // Setting property variables to default values.
+    var title = ""
+    var author = ""
 
     // While loop will keep cycling until this variable is equal to false.
     var askingForBookTitle: Bool = true
@@ -138,26 +138,25 @@ func addNewBook() -> Book {
 
         // Asks for book title and puts it through a function to check it's valid.
         print("Enter the title of the book: ", terminator: "")
-        bookTitle = readLine()!
-        askingForBookTitle = checkString(string: bookTitle)
+        title = readLine()!
+        askingForBookTitle = checkString(string: title)
     }
 
     // While loop will keep cycling until this variable is equal to false.
     var askingForBookAuthor: Bool = true
     while askingForBookAuthor {
-        
+
         // Asks for book author and puts it through a function to check it's valid.
         print("Enter the author of the book: ", terminator: "")
-        bookAuthor = readLine()!
-        askingForBookAuthor = checkString(string: bookAuthor)
+        author = readLine()!
+        askingForBookAuthor = checkString(string: author)
     }
 
+    // Asks for the number of pages through a function.
     let pages = askForBookPages()
 
-
-    
     // Returns a new book instance with properties the user entered.
-    return Book(title: bookTitle, author: bookAuthor, pages: pages, available: true)
+    return Book(title: title, author: author, pages: pages, available: true)
 }
 
 func askForBookPages() -> Int {
@@ -165,10 +164,10 @@ func askForBookPages() -> Int {
     while askingForBookPages {
         print("Enter the number of pages in the book: ", terminator: "")
         if let pagesInput = readLine() {
-            let bookPages = Int(pagesInput)
-            print("You entered \(bookPages), valid.")
+            let pages = Int(pagesInput)
+            print("You entered \(pages), valid.")
             askingForBookPages = false
-            return bookPages!
+            return pages!
         } else {
             print("Enter a whole number.")
         }
