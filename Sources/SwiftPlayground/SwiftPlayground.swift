@@ -131,7 +131,6 @@ func addNewBook() -> Book {
     // Variables for the properties start at default values.
     var bookTitle = ""
     var bookAuthor = ""
-    var bookPages = 0
 
     // While loop will keep cycling until this variable is equal to false.
     var askingForBookTitle: Bool = true
@@ -153,14 +152,27 @@ func addNewBook() -> Book {
         askingForBookAuthor = checkString(string: bookAuthor)
     }
 
-    var askingForBookPages: Bool = true
-    while askingForBookPages {
-        print()
-    }
+    let pages = askForBookPages()
+
+
+    
+    // Returns a new book instance with properties the user entered.
+    return Book(title: bookTitle, author: bookAuthor, pages: pages, available: true)
 }
 
-    // Returns a new book instance with properties the user entered.
-    return Book(title: bookTitle, author: bookAuthor, pages: bookPages, available: true)
+func askForBookPages() -> Int {
+    var askingForBookPages: Bool = true
+    while askingForBookPages {
+        print("Enter the number of pages in the book: ", terminator: "")
+        if let pagesInput = readLine() {
+            let bookPages = Int(pagesInput)
+            print("You entered \(bookPages), valid.")
+            askingForBookPages = false
+            return bookPages!
+        } else {
+            print("Enter a whole number.")
+        }
+    }
 }
 
 /// Steps of asking the user for properties to register a new user instance.
