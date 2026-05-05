@@ -122,6 +122,21 @@ func checkString(string: String) -> Bool {
     }
 }
 
+func checkIsInteger(input: String) -> Bool {
+    if let bookPagesNumber = Int(input) {
+        if bookPagesNumber > 0 {
+            return false
+        } else {
+            print("There must be atleast 1 page in the book, please try again.")
+            return true
+        }
+        
+    } else {
+        print("Please enter a whole positive number.")
+        return true
+    }
+}
+
 /// Steps of asking the user for properties to build a new book instance.
 /// 
 /// Returns: A new book instance.
@@ -130,7 +145,7 @@ func addNewBook() -> Book {
     // Variables for the properties start at default values.
     var bookTitle = ""
     var bookAuthor = ""
-    var bookPagesNumber = 0
+    var bookPages = 0
 
     // While loop will keep cycling until this variable is equal to false.
     var askingForBookTitle: Bool = true
@@ -154,25 +169,14 @@ func addNewBook() -> Book {
 
     var askingForBookPages: Bool = true
     while askingForBookPages {
-
+        let bookPages = askFor
         print("How many pages does the book have? ", terminator: "")
         let bookPages: String! = readLine()
-
-        if bookPages is Int {
-            
-            if bookPagesNumber <= 0 {
-                print("There must be atleast 1 page in the book, please try again.")
-            } else {
-                askingForBookPages = false
-            }
-        
-        } else {
-            print("Please enter a whole positive number.")
-        }
+        askingForBookPages = checkIsInteger(input: bookPages)
     }
 
     // Returns a new book instance with properties the user entered.
-    return Book(title: bookTitle, author: bookAuthor, pages: bookPagesNumber, available: true)
+    return Book(title: bookTitle, author: bookAuthor, pages: bookPages, available: true)
 }
 
 /// Steps of asking the user for properties to register a new user instance.
