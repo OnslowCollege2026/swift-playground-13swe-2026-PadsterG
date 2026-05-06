@@ -48,6 +48,7 @@ struct Loan {
     let loanLength: Int
 }
 
+/// Prints a list of options.
 func printMenu() {
     print("""
     What would you like to do?
@@ -71,17 +72,14 @@ func printMenu() {
 /// Parameters:
 /// - list: The list of books to filter through.
 func showAvailableBooks(list: [Book]) {
-
-    // Adds only available books to a new list.
+    /// Adds only available books to a new list.
     let availableBooks = list.filter { book in
         book.available == true
     }
-    
-    // Adds only unavailable books to a new list.
+    /// Adds only unavailable books to a new list.
     let unavailableBooks = list.filter { book in
         book.available == false
     }
-
     // Prints a condensed format of all available books.
     print("< Available books >")
     print()
@@ -89,7 +87,6 @@ func showAvailableBooks(list: [Book]) {
         print(book.summary)
         print()
     }
-
     // Prints a condensed format of all unavailable books.
     print("< Unavailable books >")
     print()
@@ -105,19 +102,19 @@ func showAvailableBooks(list: [Book]) {
 /// - string: The user's input.
 /// Returns: If the while loop condition should remain true or not.
 func checkString(string: String) -> Bool {
-
     // Tells user to enter again if nothing is entered.
     if string.count <= 0 {
         print("No input entered, please try again.")
+        print()
         return true
-        
     // Tells user to enter again if the string is more than 50 letters.
     } else if string.count > 50 {
         print("Input is too long, please enter a different one.")
+        print()
         return true
-    
     // Otherwise, the string is deemed valid and user will escape the while loop.
     } else {
+        print()
         return false
     }
 }
@@ -127,51 +124,58 @@ func checkString(string: String) -> Bool {
 /// 
 /// Returns: A new book instance.
 func addNewBook() -> Book {
-
-    // Setting property variables to default values.
+    /// Setting property variables to default values.
     var title = ""
     var author = ""
-
-    // While loop will keep cycling until this variable is equal to false.
+    /// While loop will keep cycling until this variable is equal to false.
     var askingForBookTitle: Bool = true
     while askingForBookTitle {
-
         // Asks for book title and puts it through a function to check it's valid.
         print("Enter the title of the book: ", terminator: "")
         title = readLine()!
         askingForBookTitle = checkString(string: title)
     }
-
-    // While loop will keep cycling until this variable is equal to false.
+    /// While loop will keep cycling until this variable is equal to false.
     var askingForBookAuthor: Bool = true
     while askingForBookAuthor {
-
         // Asks for book author and puts it through a function to check it's valid.
         print("Enter the author of the book: ", terminator: "")
         author = readLine()!
         askingForBookAuthor = checkString(string: author)
     }
 
-    // Asks for the number of pages through a function.
-    askForBookPages()
+    /// Asks for the number of pages through a function.
+    let pages = askForBookPages()
+
+    print("Created new book: (title: \(title), author: \(author), pages: \(pages))")
+    print()
 
     // Returns a new book instance with properties the user entered.
-    return Book(title: title, author: author, pages: 3, available: true)
+    return Book(title: title, author: author, pages: pages, available: true)
 }
 
-func askForBookPages() {
+func askForBookPages() -> Int {
     var askingForBookPages: Bool = true
     while askingForBookPages {
         print("Enter the number of pages in the book: ", terminator: "")
         let pagesInput = readLine()!
+        print()
         if pagesInput.count > 0 {
             if let pages = Int(pagesInput) {
-                print("Not nil")
-                print(pages)
-                askingForBookPages = false
+                if pages > 0 {
+                    askingForBookPages = false
+                    return pages
+                } else {
+                    print("There must be atleast 1 page in the book, please try again.")
+                    print()
+                }
+            } else {
+                print("Please enter a whole number.")
+                print()
             }
         } else {
-            print("Nil")
+            print("No input entered, please try again.")
+            print()
         }
     }
 }
