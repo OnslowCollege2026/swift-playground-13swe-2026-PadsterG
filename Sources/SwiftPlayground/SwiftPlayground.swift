@@ -53,7 +53,7 @@ func printMenu() {
     print("""
     What would you like to do?
     A) Add a new book
-    B) Register a new user
+    B) Add a new user
     C) Issue a book
     D) Return a book
     E) View available/unavailable books
@@ -127,6 +127,8 @@ func addNewBook() -> Book {
     /// Setting property variables to default values.
     var title = ""
     var author = ""
+    print("< Add a new book >")
+    print()
     /// While loop will keep cycling until this variable is equal to false.
     var askingForBookTitle: Bool = true
     while askingForBookTitle {
@@ -143,13 +145,10 @@ func addNewBook() -> Book {
         author = readLine()!
         askingForBookAuthor = checkString(string: author)
     }
-
     /// Asks for the number of pages through a function.
     let pages = askForBookPages()
-
     print("Created new book: (title: \(title), author: \(author), pages: \(pages))")
     print()
-
     // Returns a new book instance with properties the user entered.
     return Book(title: title, author: author, pages: pages, available: true)
 }
@@ -184,39 +183,51 @@ func askForBookPages() -> Int {
 /// 
 /// Returns: A new user instance.
 func addNewUser() -> User {
-
-    // Variables for the properties start at default values.
+    /// Setting property variables to default values.
     var firstName = ""
     var lastName = ""
-
+    print("< Add a new user >")
+    print()
     // While loop will keep cycling until this variable is equal to false.
     var askingForFirstName: Bool = true
     while askingForFirstName {
-
         // Asks for user's first name and puts it through a function to check it's valid.
         print("Enter the user's first name: ", terminator: "")
         firstName = readLine()!
         askingForFirstName = checkString(string: firstName)
     }
-
     // While loop will keep cycling until this variable is equal to false.
     var askingForLastName: Bool = true
     while askingForLastName {
-
         // Asks for user's last name and puts it through a function to check it's valid.
         print("Enter the user's last name: ", terminator: "")
         lastName = readLine()!
         askingForLastName = checkString(string: lastName)
     }
-
+    print("Added new user: (first name: \(firstName), last name: \(lastName))")
+    print()
     // Returns a new user instance with properties the user entered.
     return User(firstName: firstName, lastName: lastName)
+}
+
+func searchForBook(list: [Book]) {
+    print("Enter the title of the book: ", terminator: "")
+    let title = readLine()
+    let booksWithMatchingTitle = list.filter { book in
+        book.title == title
+    }
+
+    if booksWithMatchingTitle.count > 0 {
+        print("Book(s) found:")
+        print(booksWithMatchingTitle)
+    } else {
+        
+    }
 }
 
 @main
 struct SwiftPlayground {
     static func main() {
-
         // Initial list of books.
         var books: [Book] = [
             Book(title: "Fish School", author: "Tom Rose", pages: 32, available: true),
@@ -225,6 +236,10 @@ struct SwiftPlayground {
             Book(title: "Fifty Questions", author: "Tracy Parker", pages: 32, available: false)
         ]
 
+        var users: [User] = []
+
+        let optionLetters: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
+
         print("Welcome to the library!")
         print()
         
@@ -232,35 +247,40 @@ struct SwiftPlayground {
         var programRunning = true
         while programRunning {
             printMenu()
-
-            // While loop to ask for the user's choice.
-            var askingForUserChoice: Bool = true
-            while askingForUserChoice {
-
-                // Space for the user to enter their choice.
+            // While loop to ask for the user's option.
+            var askingForUserOption: Bool = true
+            while askingForUserOption {
+                // Space for the user to enter their option.
                 print("Enter the letter linked with the option: ", terminator: "")
                 let userOption = readLine()!
-                print()
 
                 // Only consider input if it's not null.
                 if userOption.count > 0 {
-
-                    // Different responses for different letters entered.
-                    switch userOption.uppercased() {
-                        case "A": print("Add a new book"); books.append(addNewBook()); askingForUserChoice = false; break
-                        case "B": print("Register a new user"); askingForUserChoice = false; break
-                        case "C": print("Issue a book"); askingForUserChoice = false; break
-                        case "D": print("Return a book"); askingForUserChoice = false; break
-                        case "E": showAvailableBooks(list: books); askingForUserChoice = false; break;
-                        case "F": print("Search for a book"); askingForUserChoice = false; break
-                        case "G": print("Search for a user"); askingForUserChoice = false; break
-                        case "H": print("Edit a book's details"); askingForUserChoice = false; break
-                        case "I": print("Edit a user's details"); askingForUserChoice = false; break
-                        case "J": print("Delete a book"); askingForUserChoice = false; break
-                        case "K": print("Delete a user"); askingForUserChoice = false; break
-                        default: print("Invalid answer, please try again."); print()
+                    // Checks if the input is a possible option.
+                    if optionLetters.contains(userOption.uppercased()) {
+                        // Different responses for each possible option.
+                        print()
+                        switch userOption.uppercased() {
+                            case "A": books.append(addNewBook())
+                            case "B": users.append(addNewUser())
+                            case "C": print("Issue a book")
+                            case "D": print("Return a book")
+                            case "E": showAvailableBooks(list: books)
+                            case "F": print("Search for a book"); searchForBook(list: books)
+                            case "G": print("Search for a user")
+                            case "H": print("Edit a book's details")
+                            case "I": print("Edit a user's details")
+                            case "J": print("Delete a book")
+                            case "K": print("Delete a user")
+                            default: print("Error has occured")
+                        }
+                        // Leaves while loop.
+                        askingForUserOption = false
+                    } else {
+                        // Error message is given.
+                        print("Invalid answer, please try again.")
+                        print()
                     }
-                
                 // If input is null, error messasge is given.
                 } else {
                     print("No input given, please try again.")
