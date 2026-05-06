@@ -153,23 +153,25 @@ func addNewBook() -> Book {
     }
 
     // Asks for the number of pages through a function.
-    let pages = askForBookPages()
+    askForBookPages()
 
     // Returns a new book instance with properties the user entered.
-    return Book(title: title, author: author, pages: pages, available: true)
+    return Book(title: title, author: author, pages: 3, available: true)
 }
 
-func askForBookPages() -> Int {
+func askForBookPages() {
     var askingForBookPages: Bool = true
     while askingForBookPages {
         print("Enter the number of pages in the book: ", terminator: "")
-        if let pagesInput = readLine() {
-            let pages = Int(pagesInput)
-            print("You entered \(pages), valid.")
-            askingForBookPages = false
-            return pages!
+        let pagesInput = readLine()!
+        if pagesInput.count > 0 {
+            if let pages = Int(pagesInput) {
+                print("Not nil")
+                print(pages)
+                askingForBookPages = false
+            }
         } else {
-            print("Enter a whole number.")
+            print("Nil")
         }
     }
 }
