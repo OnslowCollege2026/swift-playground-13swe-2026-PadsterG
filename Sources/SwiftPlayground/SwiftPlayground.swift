@@ -211,17 +211,20 @@ func addNewUser() -> User {
 }
 
 func searchForBook(list: [Book]) {
-    print("Enter the title of the book: ", terminator: "")
-    let title = readLine()
-    let booksWithMatchingTitle = list.filter { book in
-        book.title == title
-    }
-
-    if booksWithMatchingTitle.count > 0 {
-        print("Book(s) found:")
-        print(booksWithMatchingTitle)
-    } else {
-        
+    var askingForBookTitle: Bool = true
+    while askingForBookTitle {
+        print("Enter the title of the book: ", terminator: "")
+        let title = readLine()
+        let booksWithMatchingTitle = list.filter { book in
+            book.title == title
+        }
+        if booksWithMatchingTitle.count > 0 {
+            print("Book(s) found:")
+            print(booksWithMatchingTitle)
+            askingForBookTitle = false
+        } else {
+            print("No books found with that title.")
+        }
     }
 }
 
