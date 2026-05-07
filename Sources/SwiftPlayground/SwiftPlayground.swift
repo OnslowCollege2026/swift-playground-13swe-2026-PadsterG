@@ -228,9 +228,76 @@ func searchForBook(list: [Book]) {
             print(booksWithMatchingTitle)
             askingForBookTitle = false
         } else {
-            print("No books found with that title.")
+            print("No books found with title \(title).")
+        }
+        print()
+        var leavingBookSearch: Bool = true
+        while leavingBookSearch {
+            print("Would you like to search for another book? (Y/N) ", terminator: "")
+            let leaveBookSearch = readLine()
+            if leaveBookSearch?.uppercased() == "Y" {
+                print("You chose to search for another book.")
+                print()
+                leavingBookSearch = false
+            } else if leaveBookSearch?.uppercased() == "N" {
+                print("You chose to leave the book search.")
+                print()
+                leavingBookSearch = false
+                searchingForBook = false
+            } else {
+                print("Invalid answer, please try again.")
+                print()
+            }
         }
     }
+}
+
+func searchForUser(list: [User]) {
+    var firstName = ""
+    var searchingForUser: Bool = true
+    while searchingForUser {
+        var askingForUserFirstName: Bool = true
+        while askingForUserFirstName {
+            print("Enter the first name of the user: ", terminator: "")
+            firstName = readLine()!
+            askingForUserFirstName = checkString(string: firstName)
+        }
+        let usersWithMatchingFirstName = list.filter { user in
+            user.firstName == firstName
+        }
+        if usersWithMatchingFirstName.count > 0 {
+            print("User(s) found:")
+            print(usersWithMatchingFirstName)
+            askingForUserFirstName = false
+        } else {
+            print("No users found with first name \(firstName).")
+        }
+        print()
+        var leavingUserSearch: Bool = true
+        while leavingUserSearch {
+            print("Would you like to search for another user? (Y/N) ", terminator: "")
+            let leaveUserSearch = readLine()
+            if leaveUserSearch?.uppercased() == "Y" {
+                print("You chose to search for another user.")
+                print()
+                leavingUserSearch = false
+            } else if leaveUserSearch?.uppercased() == "N" {
+                print("You chose to leave the book search.")
+                print()
+                leavingUserSearch = false
+                searchingForUser = false
+            } else {
+                print("Invalid answer, please try again.")
+                print()
+            }
+        }
+    }
+}
+
+func issueBook() {
+    print("What book would you like to issue? ", terminator: "")
+    let issuedBook = readLine()
+    
 }
 
 @main
@@ -271,11 +338,11 @@ struct SwiftPlayground {
                         switch userOption.uppercased() {
                             case "A": books.append(addNewBook())
                             case "B": users.append(addNewUser())
-                            case "C": print("Issue a book")
+                            case "C": print("Issue a book"); issueBook()
                             case "D": print("Return a book")
                             case "E": showAvailableBooks(list: books)
                             case "F": print("Search for a book"); searchForBook(list: books)
-                            case "G": print("Search for a user")
+                            case "G": print("Search for a user"); searchForUser(list: users)
                             case "H": print("Edit a book's details")
                             case "I": print("Edit a user's details")
                             case "J": print("Delete a book")
