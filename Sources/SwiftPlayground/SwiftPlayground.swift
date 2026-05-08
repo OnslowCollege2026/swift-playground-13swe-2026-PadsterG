@@ -282,7 +282,7 @@ func searchForUser(list: [User]) {
                 print()
                 leavingUserSearch = false
             } else if leaveUserSearch?.uppercased() == "N" {
-                print("You chose to leave the book search.")
+                print("You chose to leave the user search.")
                 print()
                 leavingUserSearch = false
                 searchingForUser = false
@@ -292,12 +292,6 @@ func searchForUser(list: [User]) {
             }
         }
     }
-}
-
-func issueBook() {
-    print("What book would you like to issue? ", terminator: "")
-    let issuedBook = readLine()
-    
 }
 
 @main
@@ -338,11 +332,11 @@ struct SwiftPlayground {
                         switch userOption.uppercased() {
                             case "A": books.append(addNewBook())
                             case "B": users.append(addNewUser())
-                            case "C": print("Issue a book"); issueBook()
+                            case "C": print("< Issue a book >"); issueBook()
                             case "D": print("Return a book")
                             case "E": showAvailableBooks(list: books)
-                            case "F": print("Search for a book"); searchForBook(list: books)
-                            case "G": print("Search for a user"); searchForUser(list: users)
+                            case "F": print("< Search for a book >"); searchForBook(list: books)
+                            case "G": print("< Search for a user >"); searchForUser(list: users)
                             case "H": print("Edit a book's details")
                             case "I": print("Edit a user's details")
                             case "J": print("Delete a book")
