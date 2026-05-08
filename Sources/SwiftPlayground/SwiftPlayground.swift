@@ -11,6 +11,7 @@ import Foundation
 /// - author: who wrote the book.
 /// - pages: the number of pages in the book.
 /// - available: whether the book is currently on loan or not.
+/// - summary: small description of the book
 struct Book: Identifiable {
     let id = UUID()
     let title: String
@@ -36,64 +37,17 @@ struct User: Identifiable {
     let lastName: String
 }
 
-/// A loan between a user and a book.
-///
-/// Properties:
-/// - bookId: what book is being borrowed. 
-/// - userId: what user is borrowing the book.
-/// - loanLength: how many days until the book should be returned.
-struct Loan {
-    let bookId: Int
-    let userId: Int
-    let loanLength: Int
-}
-
 /// Prints a list of options.
 func printMenu() {
     print("""
     What would you like to do?
     A) Add a new book
     B) Add a new user
-    C) Issue a book
-    D) Return a book
-    E) View available/unavailable books
-    F) Search for a book
-    G) Search for a user
-    H) Edit a book's details
-    I) Edit a user's details
-    J) Delete a book
-    K) Delete a user
+    C) View available/unavailable books
+    D) Search for a book
+    E) Search for a user
 
     """)
-}
-
-/// Filters through the list of books to seperate available and unavailable books.
-/// 
-/// Parameters:
-/// - list: The list of books to filter through.
-func showAvailableBooks(list: [Book]) {
-    /// Adds only available books to a new list.
-    let availableBooks = list.filter { book in
-        book.available == true
-    }
-    /// Adds only unavailable books to a new list.
-    let unavailableBooks = list.filter { book in
-        book.available == false
-    }
-    // Prints a condensed format of all available books.
-    print("< Available books >")
-    print()
-    for book in availableBooks {
-        print(book.summary)
-        print()
-    }
-    // Prints a condensed format of all unavailable books.
-    print("< Unavailable books >")
-    print()
-    for book in unavailableBooks {
-        print(book.summary)
-        print()
-    }
 }
 
 /// Takes a string value entered and tests if it meets valid conditions.
@@ -119,6 +73,43 @@ func checkString(string: String) -> Bool {
     }
 }
 
+/// Asks for no of pages in a new book and runs it through conditions.
+/// 
+/// Returns: The pages value entered.
+func askForBookPages() -> Int {
+    // While loop will keep cycling until this variable is false.
+    var askingForBookPages: Bool = true
+    while askingForBookPages {
+        // Gives user a space to enter a number.
+        print("Enter the number of pages in the book: ", terminator: "")
+        let pagesInput = readLine()!
+        print()
+        // The code passes if it's not nil.
+        if pagesInput.count > 0 {
+            // Checks that the user entered a whole number.
+            if let pages = Int(pagesInput) {
+                // Confirms is there is atleast 1 page entered.
+                if pages > 0 {
+                    // User escapes loop and their pages value is returned.
+                    askingForBookPages = false
+                    return pages
+                // If less than 1 page, error message.
+                } else {
+                    print("There must be atleast 1 page in the book, please try again.")
+                    print()
+                }
+            // If whole number not entered, error message.
+            } else {
+                print("Please enter a whole number.")
+                print()
+            }
+        // If nil, error message.
+        } else {
+            print("No input entered, please try again.")
+            print()
+        }
+    }
+}
 
 /// Steps of asking the user for properties to build a new book instance.
 /// 
@@ -153,32 +144,6 @@ func addNewBook() -> Book {
     return Book(title: title, author: author, pages: pages, available: true)
 }
 
-func askForBookPages() -> Int {
-    var askingForBookPages: Bool = true
-    while askingForBookPages {
-        print("Enter the number of pages in the book: ", terminator: "")
-        let pagesInput = readLine()!
-        print()
-        if pagesInput.count > 0 {
-            if let pages = Int(pagesInput) {
-                if pages > 0 {
-                    askingForBookPages = false
-                    return pages
-                } else {
-                    print("There must be atleast 1 page in the book, please try again.")
-                    print()
-                }
-            } else {
-                print("Please enter a whole number.")
-                print()
-            }
-        } else {
-            print("No input entered, please try again.")
-            print()
-        }
-    }
-}
-
 /// Steps of asking the user for properties to register a new user instance.
 /// 
 /// Returns: A new user instance.
@@ -208,6 +173,35 @@ func addNewUser() -> User {
     print()
     // Returns a new user instance with properties the user entered.
     return User(firstName: firstName, lastName: lastName)
+}
+
+/// Filters through the list of books to seperate available and unavailable books.
+/// 
+/// Parameters:
+/// - list: The list of books to filter through.
+func showAvailableBooks(list: [Book]) {
+    /// Adds only available books to a new list.
+    let availableBooks = list.filter { book in
+        book.available == true
+    }
+    /// Adds only unavailable books to a new list.
+    let unavailableBooks = list.filter { book in
+        book.available == false
+    }
+    // Prints a condensed format of all available books.
+    print("< Available books >")
+    print()
+    for book in availableBooks {
+        print(book.summary)
+        print()
+    }
+    // Prints a condensed format of all unavailable books.
+    print("< Unavailable books >")
+    print()
+    for book in unavailableBooks {
+        print(book.summary)
+        print()
+    }
 }
 
 func searchForBook(list: [Book]) {
@@ -304,14 +298,13 @@ struct SwiftPlayground {
             Book(title: "The Living Computer", author: "Tom Rose", pages: 87, available: true),
             Book(title: "Fifty Questions", author: "Tracy Parker", pages: 32, available: false)
         ]
-
+        // Initial list of users.
         var users: [User] = []
-
-        let optionLetters: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
+        // Letters corresponding with each option.
+        let optionLetters: [String] = ["A", "B", "C", "D", "E"]
 
         print("Welcome to the library!")
         print()
-        
         // While loop for whole program.
         var programRunning = true
         while programRunning {
@@ -322,7 +315,6 @@ struct SwiftPlayground {
                 // Space for the user to enter their option.
                 print("Enter the letter linked with the option: ", terminator: "")
                 let userOption = readLine()!
-
                 // Only consider input if it's not null.
                 if userOption.count > 0 {
                     // Checks if the input is a possible option.
@@ -332,15 +324,9 @@ struct SwiftPlayground {
                         switch userOption.uppercased() {
                             case "A": books.append(addNewBook())
                             case "B": users.append(addNewUser())
-                            case "C": print("< Issue a book >"); issueBook()
-                            case "D": print("Return a book")
-                            case "E": showAvailableBooks(list: books)
-                            case "F": print("< Search for a book >"); searchForBook(list: books)
-                            case "G": print("< Search for a user >"); searchForUser(list: users)
-                            case "H": print("Edit a book's details")
-                            case "I": print("Edit a user's details")
-                            case "J": print("Delete a book")
-                            case "K": print("Delete a user")
+                            case "C": showAvailableBooks(list: books)
+                            case "D": print("< Search for a book >"); searchForBook(list: books)
+                            case "E": print("< Search for a user >"); searchForUser(list: users)
                             default: print("Error has occured")
                         }
                         // Leaves while loop.
@@ -350,17 +336,15 @@ struct SwiftPlayground {
                         print("Invalid answer, please try again.")
                         print()
                     }
-                // If input is null, error messasge is given.
+                // If input is nil, error message is given.
                 } else {
                     print("No input given, please try again.")
                     print()
                 }
             }
-
             // While loop to check if the user would like to quit the program.
             var askingForKeepGoing: Bool = true
-            while askingForKeepGoing {
-                
+            while askingForKeepGoing {   
                 // Gives input space
                 print("Would you like to do another thing? (Y/N) ", terminator: "")
                 let keepGoing = readLine()!
