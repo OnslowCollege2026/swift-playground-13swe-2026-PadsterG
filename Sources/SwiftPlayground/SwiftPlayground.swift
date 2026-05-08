@@ -204,40 +204,57 @@ func showAvailableBooks(list: [Book]) {
     }
 }
 
+/// Searches program for books entered.
+/// 
+/// Parameters:
+/// - list: The list of books to sort from.
 func searchForBook(list: [Book]) {
+    // Variable user will change to search for book.
     var title = ""
+    // While loop will keep cycling until this variable is equal to false.
     var searchingForBook: Bool = true
     while searchingForBook {
+        // While loop will keep cycling until this variable is equal to false.
         var askingForBookTitle: Bool = true
         while askingForBookTitle {
+            // Area for user to enter the title of the book.
             print("Enter the title of the book: ", terminator: "")
             title = readLine()!
+            // Puts entered title through a condition checker function.
             askingForBookTitle = checkString(string: title)
         }
+        // Filters through the list given to identify any books with that title.
         let booksWithMatchingTitle = list.filter { book in
             book.title == title
         }
+        // If any books are found, print them.
         if booksWithMatchingTitle.count > 0 {
             print("Book(s) found:")
             print(booksWithMatchingTitle)
             askingForBookTitle = false
+        // Otherwise, let user know nothing was found.
         } else {
             print("No books found with title \(title).")
         }
         print()
+        // While loop will keep cycling until this variable is equal to false.
         var leavingBookSearch: Bool = true
         while leavingBookSearch {
+            // Input space.
             print("Would you like to search for another book? (Y/N) ", terminator: "")
             let leaveBookSearch = readLine()
+            // If the user has entered Y/Yes, they will loop to the beginning of function.
             if leaveBookSearch?.uppercased() == "Y" {
                 print("You chose to search for another book.")
                 print()
                 leavingBookSearch = false
+            // If the user has entered N/No, they leave the loop and the function.
             } else if leaveBookSearch?.uppercased() == "N" {
                 print("You chose to leave the book search.")
                 print()
                 leavingBookSearch = false
                 searchingForBook = false
+            // If not yes or no, must be invalid answer.
             } else {
                 print("Invalid answer, please try again.")
                 print()
@@ -246,40 +263,57 @@ func searchForBook(list: [Book]) {
     }
 }
 
+/// Searches program for users entered.
+/// 
+/// Parameters:
+/// - list: The list of users to sort from.
 func searchForUser(list: [User]) {
+    // Variable that user will change to search for user.
     var firstName = ""
+    // While loop will keep cycling until this variable is equal to false.
     var searchingForUser: Bool = true
     while searchingForUser {
+        // While loop will keep cycling until this variable is equal to false.
         var askingForUserFirstName: Bool = true
         while askingForUserFirstName {
+            // Area for user to enter the first name of the user.
             print("Enter the first name of the user: ", terminator: "")
             firstName = readLine()!
+            // Puts entered first name through a condition checker function.
             askingForUserFirstName = checkString(string: firstName)
         }
+        // Filters through the list given to identify any books with that title.
         let usersWithMatchingFirstName = list.filter { user in
             user.firstName == firstName
         }
+        // If any users are found, print them.
         if usersWithMatchingFirstName.count > 0 {
             print("User(s) found:")
             print(usersWithMatchingFirstName)
             askingForUserFirstName = false
         } else {
+        // Otherwise, let user know nothing was found.
             print("No users found with first name \(firstName).")
         }
         print()
+        // While loop will keep cycling until this variable is equal to false.
         var leavingUserSearch: Bool = true
         while leavingUserSearch {
+            // Input space.
             print("Would you like to search for another user? (Y/N) ", terminator: "")
             let leaveUserSearch = readLine()
+            // If the user has entered Y/Yes, they will loop to the beginning of function.
             if leaveUserSearch?.uppercased() == "Y" {
                 print("You chose to search for another user.")
                 print()
                 leavingUserSearch = false
+            // If the user has entered N/No, they leave the loop and the function.
             } else if leaveUserSearch?.uppercased() == "N" {
                 print("You chose to leave the user search.")
                 print()
                 leavingUserSearch = false
                 searchingForUser = false
+            // If not yes or no, must be invalid answer.
             } else {
                 print("Invalid answer, please try again.")
                 print()
